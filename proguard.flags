@@ -1,0 +1,3 @@
+-keep class com.raygun.raygun4android.** { *; }
+-keepattributes Exceptions, Signature, InnerClasses, SourceFile, LineNumberTable
+-renamesourcefileattribute SourceFile
