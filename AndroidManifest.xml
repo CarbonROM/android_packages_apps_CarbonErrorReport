@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2021 Jacob McSwain
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
+          package="org.carbonrom.errorreport"
+          android:versionCode="1"
+          android:sharedUserId="android.uid.system">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application android:label="@string/app_name"
+                 android:icon="@mipmap/ic_launcher"
+                 android:uiOptions="none"
+                 android:name=".ErrorReportApp">
+
+        <service android:name="com.raygun.raygun4android.services.CrashReportingPostService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process=":crashreportingpostservice"/>
+
+        <!-- Oh NO! It's an API key! Don't worry, this is okay for crash
+         collection services, see https://raygun.com/forums/thread/3216 -->
+        <meta-data android:name="com.raygun.raygun4android.apikey"
+           android:value="4ZeOhNlLHtc8QpuQTzqc4w" />
+        <!-- Please don't get any ideas :) -->
+
+        <activity android:label="@string/activity_label_empty"
+                  android:name=".ErrorHandler"
+                  android:exported="true"
+                  android:excludeFromRecents="true"
+                  android:configChanges="keyboard|keyboardHidden|mcc|mnc|orientation|screenSize"
+                  android:immersive="true">
+            <intent-filter>
+                <action android:name="android.intent.action.APP_ERROR" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+    </application>
+</manifest>
